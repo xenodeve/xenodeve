@@ -9,7 +9,7 @@ I've been learning JavaScript for Project Discordbot
 * 🌍  I'm based in Nakhon Si Thammarat, Thailand
 * ✉️  You can contact me at [gamingshort01@gmail.com](mailto:gamingshort01@gmail.com)
 * 🧠  I'm learning JavaScript for My DiscordBot
-* 📖  I'm studying at King Mongkut's University of Technology North Bangkok(KMUTNB) | Mathematics with Computer Science(MC)
+* 📖  I'm studying at King Mongkut's University of Technology North Bangkok(KMUTNB) | B.Sc.Mathematics with Computer Science(MC)
 
 ### Skills
 
