@@ -38,7 +38,6 @@ I've been learning JavaScript for Project Discordbot
 
 ### Badges
 
-<b>My GitHub Stats</b>
 <a href="https://github.com/xenodeve" align="left"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=xenodeve&langs_count=10&title_color=f97316&text_color=ffffff&icon_color=facc15&bg_color=22272e&hide_border=true&locale=en&custom_title=Top%20%Languages" alt="Top Languages" /></a>
 
 <picture>
