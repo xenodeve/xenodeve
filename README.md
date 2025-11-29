@@ -30,4 +30,4 @@ src="https://img.shields.io/twitch/status/momoexia__?logo=twitchsx&style=for-the
 
 ### Badges
 
-[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=xenodeve)](https://github.com/anuraghazra/github-readme-stats)
+[![xenodeve's GitHub stats](https://github-readme-stats.vercel.app/api?username=xenodeve)](https://github.com/anuraghazra/github-readme-stats)
