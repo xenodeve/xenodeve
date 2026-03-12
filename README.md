@@ -1,10 +1,10 @@
 Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif)My name is Tun Theerut
 ===================================================================================================================================
 
-Mid-Level Software Developer
+Mid-Level Software Engineer
 -------------------------
 
-Software Developer - Slow Inc.
+Fullstack Software Architect - Slow Inc.
 
 * 🌍  I'm based in Bangkok, Thailand
 * 🖥️  See my portfolio at [My Profile Website](http://sites.google.com/email.kmutnb.ac.th/xeno/work)
