@@ -1,16 +1,26 @@
 Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif)My name is Tun Theerut
 ===================================================================================================================================
 
-Pre-Senior Software Engineer
--------------------------
+Software Engineer & System Architect
+------------------------------------
 
-Fullstack Software Architect - Slow Inc.
+Full-stack, Backend & ML Systems · **Senior-level project scope**
+
+I design and build reliable software systems across product, platform and ML boundaries. I am the architecture lead for [MangaDock](https://github.com/Slow-Inc/MangaDock), a three-service manga translation platform built with Next.js, NestJS and a Python GPU inference server. My work covers service boundaries, translation pipelines, distributed caching, security contracts, reliability and the engineering workflow that lets the team build and hand off safely.
 
 * 🌍  I'm based in Bangkok, Thailand
-* 🖥️  See my portfolio at [My Profile Website](http://sites.google.com/email.kmutnb.ac.th/xeno/work)
+* 🎓  B.Sc. Mathematics with Computer Science, KMUTNB (Year 4)
+* 🖥️  See my portfolio at [My Profile Website](https://sites.google.com/email.kmutnb.ac.th/xeno/work)
 * ✉️  You can contact me at [xenodev2004@gmail.com](mailto:xenodev2004@gmail.com)
-* 🚀  I'm currently working on [Planet Management](http://discord.com/oauth2/authorize?client_id=1218491885006622720&permissions=19233132379376&integration_type=0&scope=bot)
+* 🚀  I'm currently building [MangaDock](https://github.com/Slow-Inc/MangaDock) and [Planet Management](http://discord.com/oauth2/authorize?client_id=1218491885006622720&permissions=19233132379376&integration_type=0&scope=bot)
 * 🧠  I'm learning UX/UI
+
+### What I work on
+
+- **System architecture:** service boundaries, request/data flow and contracts across Frontend, Backend and MIT
+- **Backend/platform reliability:** multi-layer cache, queue/retry/recovery paths, SSE and signed service-to-service webhooks
+- **Applied ML systems:** OCR, translation, inpainting and patch-based rendering pipelines for manga pages
+- **Engineering enablement:** architecture documentation, simulations, tests and overlap-friendly team workflows
 
 <a href="https://www.github.com/xenodeve" target="_blank" rel="noreferrer"><img
 src="https://img.shields.io/github/followers/xenodeve?logo=github&style=for-the-badge&color=0891b2&labelColor=1c1917" /></a><a href="https://www.twitch.tv/momoexia__" target="_blank" rel="noreferrer"><img
