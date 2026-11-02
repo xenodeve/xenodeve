@@ -20,7 +20,7 @@ I design and build reliable software systems across product, platform and ML bou
 * 🎓  B.Sc. Mathematics with Computer Science, KMUTNB (Year 4)
 * 🖥️  See my portfolio at [My Profile Website](https://sites.google.com/email.kmutnb.ac.th/xeno/work)
 * ✉️  You can contact me at [xenodev2004@gmail.com](mailto:xenodev2004@gmail.com)
-* 🚀  I'm currently building [MangaDock](https://github.com/Slow-Inc/MangaDock) and [Planet Management](http://discord.com/oauth2/authorize?client_id=1218491885006622720&permissions=19233132379376&integration_type=0&scope=bot)
+* 🚀  I'm currently building [MangaDock](https://github.com/Slow-Inc/MangaDock) and [Strata-xeno](https://github.com/xenodeve/Strata-xeno)
 * 🧠  I'm learning UX/UI
 
 <a href="https://www.github.com/xenodeve" target="_blank" rel="noreferrer"><img
