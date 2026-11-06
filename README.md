@@ -1,7 +1,7 @@
 Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif)My name is Tun Theerut
 ===================================================================================================================================
 
-Software Engineer · Tech Lead · System Architect · AI Engineer + AI Researcher
+Software Engineer · Tech Lead & System Architect at [T4 Labs](https://github.com/Slow-Inc) · AI Engineer + AI Researcher
 -------------------------------------------------------
 
 Full-stack, Backend & ML Systems, Inference Engine, Local LLM · **Architecture scope**
@@ -38,7 +38,7 @@ Issue trail: PRD [#276](https://github.com/xenodeve/Strata-xeno/issues/276) → 
 
 ### MangaDock
 
-I design and build reliable software systems across product, platform and ML boundaries. I serve as Tech Lead and architecture owner for [MangaDock](https://github.com/Slow-Inc/MangaDock), a three-service manga translation platform built with Next.js, NestJS and a Python GPU inference server. My work covers service boundaries, translation pipelines, distributed state, security contracts, reliability and the engineering workflow that lets a small team build and hand off safely.
+I design and build reliable software systems across product, platform and ML boundaries. At [T4 Labs](https://github.com/Slow-Inc) I serve as Tech Lead and architecture owner for [MangaDock](https://github.com/Slow-Inc/MangaDock), a three-service manga translation platform built with Next.js, NestJS and a Python GPU inference server. My work covers service boundaries, translation pipelines, distributed state, security contracts, reliability and the engineering workflow that lets a small team build and hand off safely.
 
 ### Systems engineering focus
 
