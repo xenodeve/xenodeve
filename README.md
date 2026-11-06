@@ -6,6 +6,9 @@ Software Engineer · Tech Lead · System Architect · AI Engineer + AI Researche
 
 Full-stack, Backend & ML Systems, Inference Engine, Local LLM · **Architecture scope**
 
+> I'm building **MIP + Sandbox** on [Strata-xeno](https://github.com/xenodeve/Strata-xeno): an inference engine that does the math and runs the experiments *inside* an LLM's reasoning, so the model only has to think.
+> On models and domains it was never tuned on, it catches **94.4 %** of the arithmetic. Across **128,598** values it has written **0 false ones**. Tested on an **NVIDIA A100** at the full 262K context.
+
 ### Current research: MIP + Sandbox on Strata-xeno
 
 [Strata-xeno](https://github.com/xenodeve/Strata-xeno) is my fork of [Strata](https://github.com/Niko1221/Strata) that runs Qwen3.8-Flash-Next (125B MoE) on a two-GPU gaming PC. On it I'm building **MIP (Model-Integrated Protocol)**: the engine computes and executes *inside* the model's reasoning, with no tool-call round trip. **Software takes every calculation it can; the model only analyses the question and forms hypotheses.**
