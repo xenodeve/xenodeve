@@ -6,17 +6,6 @@ Software Engineer · Tech Lead · System Architect · AI Engineer + AI Researche
 
 Full-stack, Backend & ML Systems, Inference Engine, Local LLM · **Architecture scope**
 
-I design and build reliable software systems across product, platform and ML boundaries. I serve as Tech Lead and architecture owner for [MangaDock](https://github.com/Slow-Inc/MangaDock), a three-service manga translation platform built with Next.js, NestJS and a Python GPU inference server. My work covers service boundaries, translation pipelines, distributed state, security contracts, reliability and the engineering workflow that lets a small team build and hand off safely.
-
-### Systems engineering focus
-
-- **Resilient multi-tier state:** designed MangaDock's L1 in-process cache, shared L2 Redis cache and disk-backed L3 recovery layer as a write-behind system rather than a simple buffer
-- **Failure recovery:** leader election, dirty queues, batch persistence, retry/dead-letter handling and recovery paths across Redis, local persistence and Supabase
-- **Applied ML systems:** OCR, translation, inpainting and patch-based rendering pipelines for manga pages
-- **Engineering enablement:** architecture documentation, simulations, tests and overlap-friendly team workflows
-- **AI-assisted engineering:** use coding agents as adversarial reviewers to surface edge cases while retaining architectural ownership and final implementation decisions
-- **Measurement discipline:** every mechanism is reported as *caught / should have caught*, rules are frozen before a fresh held-out set is read, and every disagreement is read by hand
-
 ### Current research: MIP on Strata-xeno
 
 [Strata-xeno](https://github.com/xenodeve/Strata-xeno) is my fork of [Niko1221's Strata](https://github.com/Niko1221/Strata). It runs Qwen3.8-Flash-Next (125B MoE) on a two-GPU gaming PC and is tuned for the lowest latency in a real coding-agent turn. On top of the engine I'm building **MIP (Model-Integrated Protocol)**: typed capabilities the model uses inside the engine, without decoding tool-call text, together with IGC (computation read from activations or from the tokens the model writes). The PRD and its gates live in [#276](https://github.com/xenodeve/Strata-xeno/issues/276). The current work follows one rule: **software takes every calculation it can, and the model only analyses the question and forms hypotheses.**
@@ -47,11 +36,24 @@ flowchart LR
 | generality | [#307](https://github.com/xenodeve/Strata-xeno/issues/307) | the held-out sets had been read, so: General Style, model profiles, and a frozen fresh set H3 |
 | H3 result | [#308](https://github.com/xenodeve/Strata-xeno/issues/308) | General Style's truth gate: **0 false values of 41,176** on H3; the hand check's misreads are fixed from each notation's meaning |
 
+### MangaDock
+
+I design and build reliable software systems across product, platform and ML boundaries. I serve as Tech Lead and architecture owner for [MangaDock](https://github.com/Slow-Inc/MangaDock), a three-service manga translation platform built with Next.js, NestJS and a Python GPU inference server. My work covers service boundaries, translation pipelines, distributed state, security contracts, reliability and the engineering workflow that lets a small team build and hand off safely.
+
+### Systems engineering focus
+
+- **Resilient multi-tier state:** designed MangaDock's L1 in-process cache, shared L2 Redis cache and disk-backed L3 recovery layer as a write-behind system rather than a simple buffer
+- **Failure recovery:** leader election, dirty queues, batch persistence, retry/dead-letter handling and recovery paths across Redis, local persistence and Supabase
+- **Applied ML systems:** OCR, translation, inpainting and patch-based rendering pipelines for manga pages
+- **Engineering enablement:** architecture documentation, simulations, tests and overlap-friendly team workflows
+- **AI-assisted engineering:** use coding agents as adversarial reviewers to surface edge cases while retaining architectural ownership and final implementation decisions
+- **Measurement discipline:** every mechanism is reported as *caught / should have caught*, rules are frozen before a fresh held-out set is read, and every disagreement is read by hand
+
 * 🌍  I'm based in Bangkok, Thailand
 * 🎓  B.Sc. Mathematics with Computer Science, KMUTNB (Year 4)
 * 🖥️  See my portfolio at [My Profile Website](https://sites.google.com/email.kmutnb.ac.th/xeno/work)
 * ✉️  You can contact me at [xenodev2004@gmail.com](mailto:xenodev2004@gmail.com)
-* 🚀  I'm currently building [MangaDock](https://github.com/Slow-Inc/MangaDock) and [Strata-xeno](https://github.com/xenodeve/Strata-xeno)
+* 🚀  I'm currently building [Strata-xeno](https://github.com/xenodeve/Strata-xeno) and [MangaDock](https://github.com/Slow-Inc/MangaDock)
 * 🧠  I'm learning UX/UI
 
 <a href="https://www.github.com/xenodeve" target="_blank" rel="noreferrer"><img
