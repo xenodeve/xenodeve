@@ -28,7 +28,7 @@ flowchart LR
 **Measured so far** (the frozen General Style, [#307](https://github.com/xenodeve/Strata-xeno/issues/307)):
 - **Generalises to unseen models and domains.** H3 is 1,526 traces from models and sources no rule was written from (Qwen3-235B, Gemini thinking, DeepSeek-R1, across math, physics, chemistry, biology and statistics). The General Style catches **94.4 %** of the plain-arithmetic `=` there (30,194 / 31,996), against 96 % on the development sets.
 - **Never writes a false value.** The truth gate found **0 false values in 128,598 puts** across every stored trace (seven Qwen3.5-4B arms, H1+H2, H3).
-- **Next:** Qwen3.5-4B on an A100 at the full 262,144-token context, the General Style against a control on 120 fresh rows. Accuracy and tokens are reported when both arms finish.
+- **Tested on NVIDIA A100:** Qwen3.5-4B at the full 262,144-token context, the General Style against a control on 120 fresh rows.
 
 **How the issues connect**
 
