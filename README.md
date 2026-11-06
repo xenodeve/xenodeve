@@ -6,40 +6,32 @@ Software Engineer · Tech Lead · System Architect · AI Engineer + AI Researche
 
 Full-stack, Backend & ML Systems, Inference Engine, Local LLM · **Architecture scope**
 
-### Current research: MIP on Strata-xeno
+### Current research: MIP + Sandbox on Strata-xeno
 
-[Strata-xeno](https://github.com/xenodeve/Strata-xeno) is my fork of [Niko1221's Strata](https://github.com/Niko1221/Strata). It runs Qwen3.8-Flash-Next (125B MoE) on a two-GPU gaming PC and is tuned for the lowest latency in a real coding-agent turn. On top of the engine I'm building **MIP (Model-Integrated Protocol)**: typed capabilities the model uses inside the engine, without decoding tool-call text, together with IGC (computation read from activations or from the tokens the model writes). The PRD and its gates live in [#276](https://github.com/xenodeve/Strata-xeno/issues/276). The current work follows one rule: **software takes every calculation it can, and the model only analyses the question and forms hypotheses.**
+[Strata-xeno](https://github.com/xenodeve/Strata-xeno) is my fork of [Strata](https://github.com/Niko1221/Strata) that runs Qwen3.8-Flash-Next (125B MoE) on a two-GPU gaming PC. On it I'm building **MIP (Model-Integrated Protocol)**: the engine computes and executes *inside* the model's reasoning, with no tool-call round trip. **Software takes every calculation it can; the model only analyses the question and forms hypotheses.**
 
 ```mermaid
 flowchart LR
-    R["Model reasoning<br/>(streamed)"] --> D["Unified Detector<br/>exact parse or no edit"]
-    D --> M["Atomic MathBackend<br/>sub-steps, exact values"]
-    M --> S["General Style<br/>+ Profile Models"]
-    S -->|"value put inline"| R
-    R --> C["Candidate Closer<br/>closes on software evidence"]
-    C --> A["Final answer"]
+    R["Model reasoning"] --> D["Unified Detector"]
+    D --> M["Exact MathBackend<br/>atomic sub-steps"]
+    D --> X["Sandbox<br/>runs the model's program"]
+    M -->|"exact value"| R
+    X -->|"output as tokens"| R
+    R --> C["Candidate Closer"] --> A["Answer"]
 ```
 
-- **Unified Detector** reads the reasoning as it streams and decides where an exact value can be put in. A text edit needs an exact parse of what the text *means*, not just of its symbols: point names like `P(2, 3)` are not falling factorials, and patterns fitted to one benchmark question are removed ([#302](https://github.com/xenodeve/Strata-xeno/issues/302)).
-- **Candidate Closer** ends the thinking only when a final answer is confirmed by software evidence (an executed program, a backend check), never by prose keywords ([#303](https://github.com/xenodeve/Strata-xeno/issues/303)). A repeated expression is not a loop ([#301](https://github.com/xenodeve/Strata-xeno/issues/301), [#304](https://github.com/xenodeve/Strata-xeno/issues/304)).
-- **Atomic MathBackend sub-steps:** each step is evaluated by an exact math backend (numbers, counting, algebra, geometry, graph search, surd arithmetic) that is tested by simulation against SymPy, NetworkX, mpmath and brute force. Its scrutiny fixed or refused every wrong value found and removed contest-formula ops that were not general primitives ([#305](https://github.com/xenodeve/Strata-xeno/issues/305)).
-- **General Style + Profile Models:** the default `general` style writes only what is true under every reading (`16807 ≡ 7`, `6 rem 1`, `144.6666...`). Guesses about notation (residue or full value, whole quotient, rounded decimal) live in per-model profiles (`qwen3.5-4b`, `deepseek-r1`, `qwq-32b`), each recording the sets it was measured on ([#307](https://github.com/xenodeve/Strata-xeno/issues/307)).
+- **Inline exact math:** each calculation is caught as it is written, every atomic sub-step is evaluated exactly, and the value goes straight back into the reasoning. The General Style writes only what is true under every reading; model profiles only pick among true forms.
+- **Sandbox in the reasoning:** the model writes a small program, the engine runs it, and the output returns as tokens, so a hypothesis can be tested, fail and be revised mid-thought.
+- **Candidate Closer:** the thinking ends only on software evidence, never on prose keywords.
 
-**Measured so far** (the frozen General Style, [#307](https://github.com/xenodeve/Strata-xeno/issues/307)):
-- **Generalises to unseen models and domains.** H3 is 1,526 traces from models and sources no rule was written from (Qwen3-235B, Gemini thinking, DeepSeek-R1, across math, physics, chemistry, biology and statistics). The General Style catches **94.4 %** of the plain-arithmetic `=` there (30,194 / 31,996), against 96 % on the development sets.
-- **Never writes a false value.** The truth gate found **0 false values in 128,598 puts** across every stored trace (seven Qwen3.5-4B arms, H1+H2, H3).
-- **Tested on NVIDIA A100:** Qwen3.5-4B at the full 262,144-token context, the General Style against a control on 120 fresh rows.
+| benchmark | result |
+|---|---|
+| Fresh held-out set H3: 1,526 traces from Qwen3-235B, Gemini and DeepSeek-R1, math and science | **94.4 %** of arithmetic caught, rules frozen before it was read |
+| Truth gate over every stored trace | **0 false** in 128,598 inline values |
+| **NVIDIA A100**, Qwen3.5-4B, full 262K context | DeepMind Mathematics and MATH-500 Level 5, against a control |
+| Also run on | LiveBench (math, reasoning, code) and recent contest problems |
 
-**How the issues connect**
-
-| step | issue | what it settled |
-|---|---|---|
-| PRD | [#276](https://github.com/xenodeve/Strata-xeno/issues/276) | MIP by Qwenputer & IGC: the contract, the three paths (latent, token bridge, inline execution) and gates G1–G12 |
-| target | [#298](https://github.com/xenodeve/Strata-xeno/issues/298) | MIP + sandbox as one engine module, aimed at Qwen3.6-35B-A3B on Strata-xeno |
-| scrutiny | [#301](https://github.com/xenodeve/Strata-xeno/issues/301)–[#305](https://github.com/xenodeve/Strata-xeno/issues/305) | detector, closer and backend reviewed for destructive edits and false closes |
-| hand check | [#306](https://github.com/xenodeve/Strata-xeno/issues/306) | 6 of 6 replayed corrections were false, so the check gets the detector's guards |
-| generality | [#307](https://github.com/xenodeve/Strata-xeno/issues/307) | the held-out sets had been read, so: General Style, model profiles, and a frozen fresh set H3 |
-| H3 result | [#308](https://github.com/xenodeve/Strata-xeno/issues/308) | General Style's truth gate: **0 false values of 41,176** on H3; the hand check's misreads are fixed from each notation's meaning |
+Issue trail: PRD [#276](https://github.com/xenodeve/Strata-xeno/issues/276) → target [#298](https://github.com/xenodeve/Strata-xeno/issues/298) → scrutiny [#301–#305](https://github.com/xenodeve/Strata-xeno/issues/301) → General Style [#307](https://github.com/xenodeve/Strata-xeno/issues/307) → H3 [#308](https://github.com/xenodeve/Strata-xeno/issues/308)
 
 ### MangaDock
 
