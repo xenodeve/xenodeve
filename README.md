@@ -25,6 +25,11 @@ flowchart LR
 - **Atomic MathBackend sub-steps:** each step is evaluated by an exact math backend (numbers, counting, algebra, geometry, graph search, surd arithmetic) that is tested by simulation against SymPy, NetworkX, mpmath and brute force. Its scrutiny fixed or refused every wrong value found and removed contest-formula ops that were not general primitives ([#305](https://github.com/xenodeve/Strata-xeno/issues/305)).
 - **General Style + Profile Models:** the default `general` style writes only what is true under every reading (`16807 ≡ 7`, `6 rem 1`, `144.6666...`). Guesses about notation (residue or full value, whole quotient, rounded decimal) live in per-model profiles (`qwen3.5-4b`, `deepseek-r1`, `qwq-32b`), each recording the sets it was measured on ([#307](https://github.com/xenodeve/Strata-xeno/issues/307)).
 
+**Measured so far** (the frozen General Style, [#307](https://github.com/xenodeve/Strata-xeno/issues/307)):
+- **Generalises to unseen models and domains.** H3 is 1,526 traces from models and sources no rule was written from (Qwen3-235B, Gemini thinking, DeepSeek-R1, across math, physics, chemistry, biology and statistics). The General Style catches **94.4 %** of the plain-arithmetic `=` there (30,194 / 31,996), against 96 % on the development sets.
+- **Never writes a false value.** The truth gate found **0 false values in 128,598 puts** across every stored trace (seven Qwen3.5-4B arms, H1+H2, H3).
+- **Next:** Qwen3.5-4B on an A100 at the full 262,144-token context, the General Style against a control on 120 fresh rows. Accuracy and tokens are reported when both arms finish.
+
 **How the issues connect**
 
 | step | issue | what it settled |
