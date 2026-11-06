@@ -4,7 +4,7 @@ Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-912
 Software Engineer · Tech Lead · System Architect · AI Engineer + AI Researcher
 -------------------------------------------------------
 
-Full-stack, Backend & ML Systems · **Architecture scope**
+Full-stack, Backend & ML Systems, Inference Engine, Local LLM · **Architecture scope**
 
 I design and build reliable software systems across product, platform and ML boundaries. I serve as Tech Lead and architecture owner for [MangaDock](https://github.com/Slow-Inc/MangaDock), a three-service manga translation platform built with Next.js, NestJS and a Python GPU inference server. My work covers service boundaries, translation pipelines, distributed state, security contracts, reliability and the engineering workflow that lets a small team build and hand off safely.
 
