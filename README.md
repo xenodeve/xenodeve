@@ -38,7 +38,7 @@ Issue trail: PRD [#276](https://github.com/xenodeve/Strata-xeno/issues/276) → 
 
 ### MangaDock: AI manga translation platform
 
-[MangaDock](https://github.com/Slow-Inc/MangaDock) lets people read manga that has no Thai edition. It translates the text inside each page with AI and sets the Thai back into the speech bubbles, alongside a community forum, a creator studio, a coin wallet and an Android app. At [T4 Labs](https://github.com/Slow-Inc) I'm Tech Lead and architecture owner across its three services: Next.js, NestJS and a Python GPU inference server. **Live at [hayateotsu.space](https://hayateotsu.space).**
+[MangaDock](https://github.com/Slow-Inc/MangaDock) is my **Senior Project** at KMUTNB. It lets people read manga that has no Thai edition. It translates the text inside each page with AI and sets the Thai back into the speech bubbles, alongside a community forum, a creator studio, a coin wallet and an Android app. At [T4 Labs](https://github.com/Slow-Inc) I'm Tech Lead and architecture owner across its three services: Next.js, NestJS and a Python GPU inference server. **Live at [hayateotsu.space](https://hayateotsu.space).**
 
 **Detect** (DBNet, YOLOv8-seg) → **OCR** (vision-LLM fallback) → **Translate** (LLM, one request per page, glossary for names) → **Inpaint** (LaMa; FLUX only on complex backgrounds) → **Render** (Thai word-aware line breaks) → only the changed patches are sent to the reader
 
@@ -66,7 +66,7 @@ Issue trail: PRD [#276](https://github.com/xenodeve/Strata-xeno/issues/276) → 
 * 🎓  B.Sc. Mathematics with Computer Science, KMUTNB (Year 4)
 * 🖥️  See my portfolio at [My Profile Website](https://sites.google.com/email.kmutnb.ac.th/xeno/work)
 * ✉️  You can contact me at [xenodev2004@gmail.com](mailto:xenodev2004@gmail.com)
-* 🚀  I'm currently building [Strata-xeno](https://github.com/xenodeve/Strata-xeno) and [MangaDock](https://github.com/Slow-Inc/MangaDock)
+* 🚀  I'm currently building [Strata-xeno](https://github.com/xenodeve/Strata-xeno) and [MangaDock](https://github.com/Slow-Inc/MangaDock) (my Senior Project)
 * 🧠  I'm learning UX/UI
 
 <a href="https://www.github.com/xenodeve" target="_blank" rel="noreferrer"><img
