@@ -36,16 +36,29 @@ flowchart LR
 
 Issue trail: PRD [#276](https://github.com/xenodeve/Strata-xeno/issues/276) → target [#298](https://github.com/xenodeve/Strata-xeno/issues/298) → scrutiny [#301–#305](https://github.com/xenodeve/Strata-xeno/issues/301) → General Style [#307](https://github.com/xenodeve/Strata-xeno/issues/307) → H3 [#308](https://github.com/xenodeve/Strata-xeno/issues/308)
 
-### MangaDock
+### MangaDock: AI manga translation platform
 
-I design and build reliable software systems across product, platform and ML boundaries. At [T4 Labs](https://github.com/Slow-Inc) I serve as Tech Lead and architecture owner for [MangaDock](https://github.com/Slow-Inc/MangaDock), a three-service manga translation platform built with Next.js, NestJS and a Python GPU inference server. My work covers service boundaries, translation pipelines, distributed state, security contracts, reliability and the engineering workflow that lets a small team build and hand off safely.
+[MangaDock](https://github.com/Slow-Inc/MangaDock) lets people read manga that has no Thai edition. It translates the text inside each page with AI and sets the Thai back into the speech bubbles, alongside a community forum, a creator studio, a coin wallet and an Android app. At [T4 Labs](https://github.com/Slow-Inc) I'm Tech Lead and architecture owner across its three services: Next.js, NestJS and a Python GPU inference server. **Live at [hayateotsu.space](https://hayateotsu.space).**
+
+**Detect** (DBNet, YOLOv8-seg) → **OCR** (vision-LLM fallback) → **Translate** (LLM, one request per page, glossary for names) → **Inpaint** (LaMa; FLUX only on complex backgrounds) → **Render** (Thai word-aware line breaks) → only the changed patches are sent to the reader
+
+| what | measured |
+|---|---|
+| Translation server, multi-GPU | 22 s → **4.36 s per page** (5 workers, −80 %) |
+| A whole episode, translated async | first page readable at **~14 s** instead of ~43 s for 14 pages |
+| Where a page's time goes | **83 %** is the LLM call; GPU work is only ~17 % |
+| Thai layout match | **40–50 % → 90–95 %** with word-aware line breaking |
+| Cache leader crash | stuck queue **38 s → 17 s** |
+| Tests passing | 1,014 backend · 235 mobile · 169 cache |
+
+<sub>Measured on an RTX 4070 SUPER 12 GB + RTX 5060 Ti 16 GB.</sub>
 
 ### Systems engineering focus
 
 - **Resilient multi-tier state:** designed MangaDock's L1 in-process cache, shared L2 Redis cache and disk-backed L3 recovery layer as a write-behind system rather than a simple buffer
 - **Failure recovery:** leader election, dirty queues, batch persistence, retry/dead-letter handling and recovery paths across Redis, local persistence and Supabase
-- **Applied ML systems:** OCR, translation, inpainting and patch-based rendering pipelines for manga pages
-- **Engineering enablement:** architecture documentation, simulations, tests and overlap-friendly team workflows
+- **Atomic payments:** coin unlocks run in one SQL function, so a double click charges once; top-ups are HMAC-checked and idempotent
+- **Engineering enablement:** a docs portal of 369 documents, 42 ADRs and 25 interactive system simulations, so a small team can build and hand off safely
 - **AI-assisted engineering:** use coding agents as adversarial reviewers to surface edge cases while retaining architectural ownership and final implementation decisions
 - **Measurement discipline:** every mechanism is reported as *caught / should have caught*, rules are frozen before a fresh held-out set is read, and every disagreement is read by hand
 
