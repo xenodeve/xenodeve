@@ -53,6 +53,8 @@ Issue trail: PRD [#276](https://github.com/xenodeve/Strata-xeno/issues/276) → 
 
 <sub>Measured on an RTX 4070 SUPER 12 GB + RTX 5060 Ti 16 GB.</sub>
 
+![MangaDock system architecture: clients through a Cloudflare tunnel to Next.js, a multi-node NestJS backend with a Redis-elected leader, the MIT GPU translation server with five workers, and the L1/L2/L3 cache with Supabase and R2](assets/mangadock-architecture.png)
+
 ### Systems engineering focus
 
 - **Resilient multi-tier state:** designed MangaDock's L1 in-process cache, shared L2 Redis cache and disk-backed L3 recovery layer as a write-behind system rather than a simple buffer
