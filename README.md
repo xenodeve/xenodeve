@@ -6,35 +6,59 @@ Software Engineer · Tech Lead & System Architect [@T4 Labs](https://github.com/
 
 Full-stack, Backend & ML Systems, Inference Engine, Local LLM · **Architecture scope**
 
-> I'm building **MIP + Sandbox** on [Strata-xeno](https://github.com/xenodeve/Strata-xeno): an inference engine that does the math and runs the experiments *inside* an LLM's reasoning, so the model only has to think.
-> On models and domains it was never tuned on, it catches **94.4 %** of the arithmetic. Across **128,598** values it has written **0 false ones**. Tested on an **NVIDIA A100** at the full 262K context.
+> I'm building **MIP (Model Integrated Protocol) + Sandbox**: software that sits *inside* the inference engine, does the math and runs the experiments while an LLM is still reasoning, so the model only has to think. **No training, no weight changes, no second model.**
+> On a 4B model it turns **157 → 204** right answers out of 232 on a fresh frozen set, gets **156 / 160** arithmetic answers right instead of 118 with **95 % fewer tokens**, and has put **0 wrong values** in **80,000+** checked insertions.
 
-### Current research: MIP + Sandbox on Strata-xeno
+### Current research: MIP + Sandbox ([mip-research](https://github.com/xenodeve/mip-research))
 
-[Strata-xeno](https://github.com/xenodeve/Strata-xeno) is my fork of [Strata](https://github.com/Niko1221/Strata) that runs Qwen3.8-Flash-Next (125B MoE) on a two-GPU gaming PC. On it I'm building **MIP (Model-Integrated Protocol)**: the engine computes and executes *inside* the model's reasoning, with no tool-call round trip. **Software takes every calculation it can; the model only analyses the question and forms hypotheses.**
+**The idea.** A language model is a good reasoner and a bad calculator. When it multiplies two 5-digit numbers in its head it burns hundreds of tokens and still slips a digit, and a small model can get stuck repeating itself until the context runs out. MIP splits the work: **software takes every calculation it can, and the model only analyses the question and forms hypotheses.** The name echoes MCP on purpose, because the two put software beside a model from opposite sides:
+
+| | MCP (Model Context Protocol) | MIP (Model Integrated Protocol) |
+|---|---|---|
+| Where the software sits | outside the engine, behind a tool server | inside the inference engine, beside the decode loop |
+| Who starts it | the model, by writing a tool call | the engine; the model calls nothing |
+| How a result arrives | a tool result after a round trip, then the model goes on | written straight into the token stream while the model writes |
+
+**How it works.** The engine hands MIP each token as it is written. MIP reads what the model is doing, the connected software acts, and the result goes back into the stream mid-thought:
 
 ```mermaid
 flowchart LR
-    R["Model reasoning"] --> D["Unified Detector"]
-    D --> M["Exact MathBackend<br/>atomic sub-steps"]
-    D --> X["Sandbox<br/>runs the model's program"]
-    M -->|"exact value"| R
-    X -->|"output as tokens"| R
-    R --> C["Candidate Closer"] --> A["Answer"]
+    R["Model reasoning<br/>(token stream)"] --> C["Collect<br/>= reader · question reader<br/>repeat check · probes"]
+    C --> M["MIP MathBackend<br/>exact value, no floating point"]
+    C --> S["MIP Sandbox<br/>runs the model's program"]
+    C --> L["MIP Antiloop<br/>ends a loop"]
+    M -->|"value after ="| R
+    S -->|"printed output"| R
+    L -->|"close of thinking / answer"| R
 ```
 
-- **Inline exact math:** each calculation is caught as it is written, every atomic sub-step is evaluated exactly, and the value goes straight back into the reasoning. The General Style writes only what is true under every reading; model profiles only pick among true forms.
-- **Sandbox in the reasoning:** the model writes a small program, the engine runs it, and the output returns as tokens, so a hypothesis can be tested, fail and be revised mid-thought.
-- **Candidate Closer:** the thinking ends only on software evidence, never on prose keywords.
+- **Inline exact math:** the moment the model writes `=`, MIP reads the expression, computes it exactly (387 operations, rational arithmetic) and writes the value in. It writes only what is true under every reading of the `=`; if anything is unsure, it writes nothing and the model goes on.
+- **Sandbox in the reasoning:** the model writes a short program as part of its thinking (or the engine opens the block for it), MIP runs it in an isolation box and puts the printed output back, so a hypothesis can be tested, fail and be revised mid-thought, with no tool call and no turn round trip.
+- **Antiloop:** small models fall into loops that never finish. MIP sees the repeat and closes the thinking or the answer, so the model writes an answer instead of running to the end of the context.
+- **Engine-agnostic by design:** the goal is one module that any engine plugs in (llama.cpp, vLLM, [Strata-xeno](https://github.com/xenodeve/Strata-xeno)). Because it works on the token stream, the same module serves every model with no retraining.
 
-| benchmark | result |
+**What it buys, measured against the same model without MIP:**
+
+| Test | Without MIP | With MIP |
+|---|---|---|
+| **Fresh frozen set**, Qwen3.5-4B (NVFP4), 232 paired answers (DeepMind + MATH-500 L5), thinking on, full 262K context | 157 right | **204 right** (+47, sign test p = 2e-10; API reader 208) |
+| **Arithmetic**, Qwen3.5-4B, DeepMind 160 | 118 / 160 · 261,731 tokens | **156 / 160 · 12,062 tokens (−95 %)** · 85 % faster |
+| **Loop-prone questions**, Qwen3.5-4B, A100 | 24 / 48 right · 21 with no answer | **37 / 48 right · 1 with no answer** |
+| **Sandbox**, Qwen3.8-Flash-Next (125B MoE), 49 GSM8K + MATH questions × 2 | 73 right · 247,162 tokens | **77 right · 125,608 tokens (−49 %)** |
+| **LiveCodeBench hard**, Qwen3.8-Flash-Next, 20 paired | 17 right · 684K tokens | **18 right · 272K tokens (−60 %)** |
+| **5-digit multiplication** inside Strata's decode loop, Qwen3.8-Flash-Next | 491 tokens · 6.25 s | **137 tokens (−72 %) · 2.80 s (−56 %)** |
+| **GSM-Hard 200**, Qwen3.8-Flash-Next | 731 tokens per answer | **571 (−22 %)**, same accuracy (177 vs 178) |
+| **Hard reasoning** (GPQA, SuperGPQA, long MATH), tool route on an A100 | 1.00x tokens | **0.71x–0.81x**, within 1 answer per set |
+
+| Safety check | Result |
 |---|---|
-| Fresh held-out set H3: 1,526 traces from Qwen3-235B, Gemini and DeepSeek-R1, math and science | **94.4 %** of arithmetic caught, rules frozen before it was read |
-| Truth gate over every stored trace | **0 false** in 128,598 inline values |
-| **NVIDIA A100**, Qwen3.5-4B, full 262K context | DeepMind Mathematics and MATH-500 Level 5, against a control |
-| Also run on | LiveBench (math, reasoning, code) and recent contest problems |
+| Every value MIP wrote, re-checked exactly | **0 wrong** in 41,176 frozen + 39,046 live insertions |
+| Held-out H3: 1,526 traces from Qwen3-235B, Gemini and DeepSeek-R1, rules frozen before it was read | **94.4 %** of the arithmetic caught |
+| Loop closers replayed on stored right answers | **0 of 1,078** right answers touched |
 
-Issue trail: PRD [#276](https://github.com/xenodeve/Strata-xeno/issues/276) → target [#298](https://github.com/xenodeve/Strata-xeno/issues/298) → scrutiny [#301–#305](https://github.com/xenodeve/Strata-xeno/issues/301) → General Style [#307](https://github.com/xenodeve/Strata-xeno/issues/307) → H3 [#308](https://github.com/xenodeve/Strata-xeno/issues/308)
+<sub>Every result names its model, build and machine, is paired against a control from the same round, and is scored by a rule and a second API reader with every disagreement read by hand. Built on the RTX 5060 Ti + RTX 4070 SUPER, tested on an NVIDIA A100. Still research: the methods change from round to round, and the next step is a frozen round on the A100.</sub>
+
+Catalog of every mechanism and benchmark: [mip-research](https://github.com/xenodeve/mip-research) · [docs/INDEX](https://github.com/xenodeve/mip-research/blob/main/docs/INDEX.md) · tracker [#19](https://github.com/xenodeve/mip-research/issues/19)
 
 ### MangaDock: AI manga translation platform
 
