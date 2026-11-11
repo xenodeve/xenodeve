@@ -7,7 +7,7 @@ Software Engineer · Tech Lead & System Architect [@T4 Labs](https://github.com/
 Full-stack, Backend & ML Systems, Inference Engine, Local LLM · **Architecture scope**
 
 > I'm building **MIP (Model Integrated Protocol) + Sandbox**: software that sits *inside* the inference engine, does the math and runs the experiments while an LLM is still reasoning, so the model only has to think. **No training, no weight changes, no second model.**
-> On a 4B model it turns **157 → 204** right answers out of 232 on a fresh frozen set, gets **156 / 160** arithmetic answers right instead of 118 with **95 % fewer tokens**, and has put **0 wrong values** in **80,000+** checked insertions.
+> On a 4B model it turns **161 → 215** right answers out of 240 on a fresh frozen set, gets **156 / 160** arithmetic answers right instead of 118 with **95 % fewer tokens**, and has put **0 wrong values** in **80,000+** checked insertions.
 
 ### Current research: MIP + Sandbox ([mip-research](https://github.com/xenodeve/mip-research))
 
@@ -41,7 +41,7 @@ flowchart LR
 
 | Test | Without MIP | With MIP |
 |---|---|---|
-| **Fresh frozen set**, Qwen3.5-4B (NVFP4), 232 paired answers (DeepMind + MATH-500 L5), thinking on, full 262K context | 157 right | **204 right** (+47, sign test p = 2e-10; API reader 208) |
+| **Fresh frozen set**, Qwen3.5-4B (NVFP4), 232 paired answers (DeepMind + MATH-500 L5), thinking on, full 262K context | 161 right | **215 right** (+54, sign test p = 9e-13; API reader 216) |
 | **Arithmetic**, Qwen3.5-4B, DeepMind 160 | 118 / 160 · 261,731 tokens | **156 / 160 · 12,062 tokens (−95 %)** · 85 % faster |
 | **Loop-prone questions**, Qwen3.5-4B, A100 | 24 / 48 right · 21 with no answer | **37 / 48 right · 1 with no answer** |
 | **Sandbox**, Qwen3.8-Flash-Next (125B MoE), 49 GSM8K + MATH questions × 2 | 73 right · 247,162 tokens | **77 right · 125,608 tokens (−49 %)** |
