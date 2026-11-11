@@ -41,7 +41,7 @@ flowchart LR
 
 | Test | Without MIP | With MIP |
 |---|---|---|
-| **Fresh frozen set**, Qwen3.5-4B (NVFP4), 232 paired answers (DeepMind + MATH-500 L5), thinking on, full 262K context | 161 right | **215 right** (+54, sign test p = 9e-13; API reader 216) |
+| **Fresh frozen set**, Qwen3.5-4B (NVFP4), 240 paired answers (DeepMind + MATH-500 L5), thinking on, full 262K context | 161 right | **215 right** (+54, sign test p = 9e-13; API reader 216) |
 | **Arithmetic**, Qwen3.5-4B, DeepMind 160 | 118 / 160 · 261,731 tokens | **156 / 160 · 12,062 tokens (−95 %)** · 85 % faster |
 | **Loop-prone questions**, Qwen3.5-4B, A100 | 24 / 48 right · 21 with no answer | **37 / 48 right · 1 with no answer** |
 | **Sandbox**, Qwen3.8-Flash-Next (125B MoE), 49 GSM8K + MATH questions × 2 | 73 right · 247,162 tokens | **77 right · 125,608 tokens (−49 %)** |
